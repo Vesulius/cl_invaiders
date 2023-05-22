@@ -7,6 +7,8 @@
 #include "debug_log.hpp"
 #include "graphics.hpp"
 
+const int ENEMY_WIDTH = 3;
+
 enum direction {
     left = -1,
     right = 1
@@ -33,9 +35,11 @@ class State {
         graphics = Graphics(height, width);
         gameOver = false;
 
-        enemies.push_back({3, 3, right});
-        height = height;
-        width = width;
+        // enemies.push_back({2, 2, right});
+        wave = 1;
+
+        screenHeight = height;
+        screenWidth = width;
 
         player.x = 10;
         player.y = 10;
@@ -61,7 +65,7 @@ class State {
                     player.x--;
                     break;
                 case 32:  // SPACE key
-                    bullets.push_back({player.x, player.y - 1});
+                    bullets.push_back({player.x + 1, player.y});
                     break;
                 case 'q':
                 case 'Q':
@@ -93,10 +97,13 @@ class State {
             Enemy& e = *it;
             graphics.maskEnemy(e.y, e.x);
 
-            bool collisionWithBullet = false;
+            bool removeEnemy = false;
+
+            removeEnemy = e.y >= screenHeight;
+
             for (Bullet& bullet : bullets) {
                 if (bullet.y == e.y && (bullet.x == e.x || bullet.x == e.x + 1 || bullet.x == e.x + 2)) {
-                    collisionWithBullet = true;
+                    removeEnemy = true;
                     break;
                 }
             }
@@ -105,16 +112,24 @@ class State {
                 gameOver = true;
             }
 
-            if (collisionWithBullet) {
+            if (removeEnemy) {
                 it = enemies.erase(it);
             } else {
-                if (e.x + 2 >= 38 || e.x < 2) {
+                if (e.x + 2 >= screenWidth - ENEMY_WIDTH || e.x < 2) {
                     e.d = static_cast<direction>(e.d * (-1));
                     e.y++;
                 }
                 e.x += e.d;
                 ++it;
                 graphics.drawEnemy(e.y, e.x);
+            }
+        }
+
+        // add next wave of enemies
+        if (enemies.size() == 0) {
+            wave *= 2;
+            for (int i = 0; i < wave; i++) {
+                enemies.push_back({2 + (i * (ENEMY_WIDTH + 2)) % (screenWidth / 2), 2 + (i * 4)  / screenHeight, right});
             }
         }
 
@@ -136,8 +151,9 @@ class State {
    private:
     Graphics graphics;
     Player player;
-    int width;
-    int height;
+    int screenWidth;
+    int screenHeight;
+    int wave;
     std::vector<Enemy> enemies;
     std::vector<Bullet> bullets;
 };
