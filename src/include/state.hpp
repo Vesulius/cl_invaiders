@@ -53,20 +53,28 @@ class State {
                 case -1:  // no input
                     return;
                 case 65:  // UP
-                    graphics.maskPlayer(player.y, player.x);
-                    if (player.y > 1) player.y--;
+                    if (player.y > 1) {
+                        graphics.maskPlayer(player.y, player.x);
+                        player.y--;
+                    }
                     break;
                 case 66:  // DOWN
-                    graphics.maskPlayer(player.y, player.x);
-                    if (player.y < screenHeight - 2) player.y++;
+                    if (player.y < screenHeight - 2) {
+                        graphics.maskPlayer(player.y, player.x);
+                        player.y++;
+                    }
                     break;
                 case 67:  // RIGHT
-                    graphics.maskPlayer(player.y, player.x);
-                    if (player.x < screenWidth - 4) player.x++;
+                    if (player.x < screenWidth - 4) {
+                        graphics.maskPlayer(player.y, player.x);
+                        player.x++;
+                    }
                     break;
                 case 68:  // LEFT
-                    graphics.maskPlayer(player.y, player.x);
-                    if (player.x > 1) player.x--;
+                    if (player.x > 1) {
+                        graphics.maskPlayer(player.y, player.x);
+                        player.x--;
+                    }
                     break;
                 case 32:  // SPACE key
                     if (bullets.size() < MAX_BULLETS) {
