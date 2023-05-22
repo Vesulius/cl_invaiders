@@ -60,8 +60,8 @@ class Graphics {
         mvwaddch(window, y, x + 2, ' ');
     }
 
-    void printPoints(int points, int ammo) {
-        mvwprintw(window, height - 1, 5, " P O I N T S: %d - A M M O: %d ", points, ammo);
+    void printPoints(int points, int bullets, int maxAmmo) {
+        mvwprintw(window, height - 1, 4, " P O I N T S: %d - A M M O: %d/%d ", points, bullets, maxAmmo);
     }
 
     void gameOverScreen(int points) {

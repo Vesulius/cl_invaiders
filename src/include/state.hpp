@@ -54,19 +54,19 @@ class State {
                     return;
                 case 65:  // UP
                     graphics.maskPlayer(player.y, player.x);
-                    player.y--;
+                    if (player.y > 1) player.y--;
                     break;
                 case 66:  // DOWN
                     graphics.maskPlayer(player.y, player.x);
-                    player.y++;
+                    if (player.y < screenHeight - 2) player.y++;
                     break;
                 case 67:  // RIGHT
                     graphics.maskPlayer(player.y, player.x);
-                    player.x++;
+                    if (player.x < screenWidth - 4) player.x++;
                     break;
                 case 68:  // LEFT
                     graphics.maskPlayer(player.y, player.x);
-                    player.x--;
+                    if (player.x > 1) player.x--;
                     break;
                 case 32:  // SPACE key
                     if (bullets.size() < MAX_BULLETS) {
@@ -146,7 +146,7 @@ class State {
         graphics.drawPlayer(player.y, player.x);
 
         // UI
-        graphics.printPoints(points, MAX_BULLETS - bullets.size());
+        graphics.printPoints(points, MAX_BULLETS - bullets.size(), MAX_BULLETS);
     }
 
     void gameOverScreen() {
