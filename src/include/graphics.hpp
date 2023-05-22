@@ -14,9 +14,14 @@ class Graphics {
 
         // init graphics
         wclear(window);
-        box(window, 0, 0);  // add border
+        drawFrame();
         wrefresh(window);
         nodelay(window, TRUE);
+    }
+
+    void drawFrame() {
+        box(window, 0, 0);  // add border
+        mvwprintw(window, 0, width / 2 - 9, " A S T E R O I D S ");
     }
 
     int getInput() {
@@ -55,17 +60,21 @@ class Graphics {
         mvwaddch(window, y, x + 2, ' ');
     }
 
+    void printPoints(int points) {
+        mvwprintw(window, height - 1, 5, " P O I N T S: %d - A M M O: %d ", points, 6);
+    }
+
     void gameOverScreen() {
         wclear(window);
-        box(window, 0, 0);  // add border
-        mvwprintw(window, 5, 6, "   ___   _   __  __ ___ ");
-        mvwprintw(window, 6, 6, "  / __| /_\\ |  \\/  | __|");
-        mvwprintw(window, 7, 6, " | (_ |/ _ \\| |\\/| | _|");
-        mvwprintw(window, 8, 6, "  \\___/_/ \\_\\_|  |_|___|");
-        mvwprintw(window, 9, 6, "   _____   _____ ___");
-        mvwprintw(window, 10, 6, "  / _ \\ \\ / / __| _ \\");
-        mvwprintw(window, 11, 6, " | (_) \\ V /| _||   /");
-        mvwprintw(window, 12, 6, "  \\___/ \\_/ |___|_|_\\");
+        drawFrame();
+        mvwprintw(window, 5, 7, "   ___   _   __  __ ___ ");
+        mvwprintw(window, 6, 7, "  / __| /_\\ |  \\/  | __|");
+        mvwprintw(window, 7, 7, " | (_ |/ _ \\| |\\/| | _|");
+        mvwprintw(window, 8, 7, "  \\___/_/ \\_\\_|  |_|___|");
+        mvwprintw(window, 9, 7, "   _____   _____ ___");
+        mvwprintw(window, 10, 7, "  / _ \\ \\ / / __| _ \\");
+        mvwprintw(window, 11, 7, " | (_) \\ V /| _||   /");
+        mvwprintw(window, 12, 7, "  \\___/ \\_/ |___|_|_\\");
     }
 
    private:

@@ -137,6 +137,9 @@ class State {
         graphics.maskPlayer(player.y, player.x);
         processInput();
         graphics.drawPlayer(player.y, player.x);
+
+        // UI
+        graphics.printPoints(wave);
     }
 
     void gameOverScreen() {
