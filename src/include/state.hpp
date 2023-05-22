@@ -53,19 +53,23 @@ class State {
                 case -1:  // no input
                     return;
                 case 65:  // UP
+                    graphics.maskPlayer(player.y, player.x);
                     player.y--;
                     break;
                 case 66:  // DOWN
+                    graphics.maskPlayer(player.y, player.x);
                     player.y++;
                     break;
                 case 67:  // RIGHT
+                    graphics.maskPlayer(player.y, player.x);
                     player.x++;
                     break;
                 case 68:  // LEFT
+                    graphics.maskPlayer(player.y, player.x);
                     player.x--;
                     break;
                 case 32:  // SPACE key
-                    if (bullets.size() < 3) {
+                    if (bullets.size() < MAX_BULLETS) {
                         bullets.push_back({player.x + 1, player.y});
                     }
                     break;
@@ -132,12 +136,11 @@ class State {
         if (enemies.size() == 0) {
             wave *= 2;
             for (int i = 0; i < wave; i++) {
-                enemies.push_back({2 + (i * (ENEMY_WIDTH + 2)) % (screenWidth / 2), 2 + (i * 4)  / screenHeight, right});
+                enemies.push_back({2 + (i * (ENEMY_WIDTH + 2)) % (screenWidth / 2), 2 + (i * 4) / screenHeight, right});
             }
         }
 
         // get user input and update player
-        graphics.maskPlayer(player.y, player.x);
         processInput();
         graphics.drawPlayer(player.y, player.x);
 
