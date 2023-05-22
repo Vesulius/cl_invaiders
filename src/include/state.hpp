@@ -1,6 +1,5 @@
 #pragma once
 
-#include <set>
 #include <string>
 #include <vector>
 
@@ -8,6 +7,7 @@
 #include "graphics.hpp"
 
 const int ENEMY_WIDTH = 3;
+const int MAX_BULLETS = 3;
 
 enum direction {
     left = -1,
@@ -35,8 +35,8 @@ class State {
         graphics = Graphics(height, width);
         gameOver = false;
 
-        // enemies.push_back({2, 2, right});
         wave = 1;
+        points = 0;
 
         screenHeight = height;
         screenWidth = width;
@@ -65,7 +65,9 @@ class State {
                     player.x--;
                     break;
                 case 32:  // SPACE key
-                    bullets.push_back({player.x + 1, player.y});
+                    if (bullets.size() < 3) {
+                        bullets.push_back({player.x + 1, player.y});
+                    }
                     break;
                 case 'q':
                 case 'Q':
@@ -104,6 +106,7 @@ class State {
             for (Bullet& bullet : bullets) {
                 if (bullet.y == e.y && (bullet.x == e.x || bullet.x == e.x + 1 || bullet.x == e.x + 2)) {
                     removeEnemy = true;
+                    points++;
                     break;
                 }
             }
@@ -139,11 +142,11 @@ class State {
         graphics.drawPlayer(player.y, player.x);
 
         // UI
-        graphics.printPoints(wave);
+        graphics.printPoints(points, MAX_BULLETS - bullets.size());
     }
 
     void gameOverScreen() {
-        graphics.gameOverScreen();
+        graphics.gameOverScreen(points);
         graphics.refresh();
     }
 
@@ -157,6 +160,7 @@ class State {
     int screenWidth;
     int screenHeight;
     int wave;
+    int points;
     std::vector<Enemy> enemies;
     std::vector<Bullet> bullets;
 };

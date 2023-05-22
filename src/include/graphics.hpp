@@ -60,11 +60,11 @@ class Graphics {
         mvwaddch(window, y, x + 2, ' ');
     }
 
-    void printPoints(int points) {
-        mvwprintw(window, height - 1, 5, " P O I N T S: %d - A M M O: %d ", points, 6);
+    void printPoints(int points, int ammo) {
+        mvwprintw(window, height - 1, 5, " P O I N T S: %d - A M M O: %d ", points, ammo);
     }
 
-    void gameOverScreen() {
+    void gameOverScreen(int points) {
         wclear(window);
         drawFrame();
         mvwprintw(window, 5, 7, "   ___   _   __  __ ___ ");
@@ -75,6 +75,7 @@ class Graphics {
         mvwprintw(window, 10, 7, "  / _ \\ \\ / / __| _ \\");
         mvwprintw(window, 11, 7, " | (_) \\ V /| _||   /");
         mvwprintw(window, 12, 7, "  \\___/ \\_/ |___|_|_\\");
+        mvwprintw(window, height - 1, width / 2 - 7, " P O I N T S: %d ", points);
     }
 
    private:
