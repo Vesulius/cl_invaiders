@@ -110,6 +110,7 @@ class State {
             for (Bullet& bullet : bullets) {
                 if (bullet.y == e.y && (bullet.x == e.x || bullet.x == e.x + 1 || bullet.x == e.x + 2)) {
                     removeEnemy = true;
+                    bullet.y = -1;
                     points++;
                     break;
                 }
