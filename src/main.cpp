@@ -8,7 +8,7 @@
 
 const int WINDOW_HEIGHT = 20;
 const int WINDOW_WIDTH = WINDOW_HEIGHT * 2;
-const int FRAME_RATE = 20;
+const int FRAME_RATE = 15;
 
 int main() {
     // Init ncurses

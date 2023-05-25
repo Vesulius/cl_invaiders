@@ -1,6 +1,8 @@
 #pragma once
 
+#include <chrono>
 #include <string>
+#include <thread>
 #include <vector>
 
 #include "debug_log.hpp"
@@ -36,6 +38,7 @@ class State {
         gameOver = false;
 
         wave = 1;
+        spawnEnemies = 0;
         points = 0;
 
         screenHeight = height;
@@ -93,6 +96,12 @@ class State {
     }
 
     void updateState() {
+        // new wave
+        if (enemies.size() == 0) {
+            wave++;
+            spawnEnemies = 2 ^ wave;
+        }
+
         // update bullets
         for (std::vector<Bullet>::iterator it = bullets.begin(); it != bullets.end();) {
             Bullet& b = *it;
@@ -141,12 +150,13 @@ class State {
             }
         }
 
-        // add next wave of enemies
-        if (enemies.size() == 0) {
-            wave *= 2;
-            for (int i = 0; i < wave; i++) {
-                enemies.push_back({2 + (i * (ENEMY_WIDTH + 2)) % (screenWidth / 2), 2 + (i * 4) / screenHeight, right});
-            }
+        // spawn enemies
+        if (spawnEnemies > 0) {
+            direction d = spawnEnemies % 2 ? left : right;
+            enemies.push_back({screenWidth / 2, 1, d});
+            enemies.push_back({screenWidth / 2 + ENEMY_WIDTH + 1, 1, d});
+            enemies.push_back({screenWidth / 2 + ENEMY_WIDTH * 2 + 2, 1, d});
+            spawnEnemies -= 3;
         }
 
         // get user input and update player
@@ -172,6 +182,7 @@ class State {
     int screenWidth;
     int screenHeight;
     int wave;
+    int spawnEnemies;
     int points;
     std::vector<Enemy> enemies;
     std::vector<Bullet> bullets;
