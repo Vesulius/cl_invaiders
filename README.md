@@ -6,7 +6,7 @@
 ```
 ___
 
-Simple asteroids command line game.
+Simple invaiders command line game.
 
 Mostly done just to practice making CL interfaces.
 ___
